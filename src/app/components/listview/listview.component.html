@@ -1,0 +1,52 @@
+<div>
+    <section>
+        <form>
+            <!-- Template Statements -->
+            <fieldset>
+                <legend>Tamaño de Fuente</legend>
+                <label class="p-2">
+                    <input type="radio" name="tam" value="peq" (change)="PeqPresionado()">Pequeña
+                </label>
+                <label class="p-2">
+                    <input type="radio" name="tam" value="med" (change)="MedPresionado()" >Mediana
+                </label>
+                <label class="p-2">
+                    <input type="radio" name="tam" value="gde" (change)="GdePresionado()">Grande
+                </label>
+            </fieldset>
+        </form>
+    </section>
+    <section>
+        <ul>
+            <!-- ngFor + Directivas de Atributo-->
+            <li *ngFor="let alumno of alumnos" [ngClass]="alumno.calificacion < 6 ? 'text-danger' : 'text-dark'">
+                <!-- Interpolacion (Template Expressions) -->
+                <span [ngClass]="tamanoActual">Nombre: {{alumno.nombre}} / Calificación: {{alumno.calificacion}}</span>
+                <!-- ngSwitch -->
+                <div [ngSwitch]="alumno.calificacion">
+                    <span class="badge bg-success" *ngSwitchCase="10">Excelente</span>
+                    <span class="badge bg-primary" *ngSwitchCase="9">Buena</span>
+                    <span class="badge bg-black" *ngSwitchCase="8">Regular</span>
+                </div>
+                <!-- ngIf -->
+                <div class="p-1" *ngIf="alumno.calificacion < 6">
+                    <button type="button" class="btn btn-primary" data="alumno" (click)="testDarDebaja()">Dar de Baja</button>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <!-- Two-way binding -->
+        <legend>Stream de Datos:</legend>
+        <input type="range" class="form-range" id="nvoDato" [(ngModel)]="nvoDato" />
+        <input type="number" id="nvoDato" [(ngModel)]="nvoDato" readonly>
+        <button class="btn btn-danger m-3" (click)="AgregarDatoStream()">Enviar</button>
+    </section>
+    <section>
+        <legend>Datos Recibidos:</legend>
+        <ol>
+            <!-- Pipes -->
+            <li *ngFor="let unDato of bufferDatos">{{unDato.valor}} | {{unDato.fecha | date}}</li>
+        </ol>
+    </section>
+</div>
